@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+body{
+	margin:0;
+	padding:0;
+	}
+div{
+	position:relative;
+	background:red;
+	width:200px;
+	height:200px;
+	opacity:0.3;
+	margin:20px;
+	float:left;
+	filter:alpha(opacity=30);
+	}
+/*#div1 span{
+	position:absolute;
+	width:30px;
+	height:80px;
+	left:100%;
+	top:50%;
+	margin-top:-40px;
+	background:blue;
+	}*/
+</style>
+<script>
+window.onload=function(){
+	oDiv=document.getElementsByTagName("div");
+	for(var i=0;i<oDiv.length;i++){
+		oDiv[i].timer=null;
+		oDiv[i].alpha=30;
+	oDiv[i].onmouseover=function(){
+		startMove(this,100);
+		}
+	oDiv[i].onmouseout=function(){
+		startMove(this,30);
+		}
+		}
+	}
+//var timer=null;
+//var alpha=30;
+function startMove(obj,iTarget){
+	clearInterval(obj.timer);
+	//oDiv=document.getElementById("div1");
+	obj.timer=setInterval(function(){
+		var speed=0;
+		if(obj.alpha>iTarget){
+			speed=-10;
+			}else{
+				speed=10;
+				}
+		if(obj.alpha==iTarget){
+			clearInterval(obj.timer);
+			}else{
+				obj.alpha+=speed;
+				obj.style.filter='alpha(opacity:'+obj.alpha+')';
+				obj.style.opacity=obj.alpha/100;
+				}
+	
+		},30)
+	}
+</script>
+</head>
+
+<body>
+<div id="div1"></div>
+<div id="div2"></div>
+<div id="div3"></div>
+<div id="div4"></div>
+<div id="div5"></div>
+</body>
+</html>
