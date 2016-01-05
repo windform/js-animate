@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>多重同步运动动画</title>
+<style>
+ul,li{
+	list-style:none;
+	}
+ul li{
+	width:200px;
+	border:solid 1px #000;
+	height:100px;
+	background:yellow;
+	margin-bottom:20px;
+	}
+</style>
+
+
+</head>
+
+<body>
+
+<ul>
+	<li class="lii" id="li_1"></li>
+</ul>
+
+
+
+<script>
+window.onload=function(){
+
+	Li_1=document.getElementById("li_1")
+		Li_1.onmouseover=function(){
+			startMove(Li_1,{width:220,height:400});
+		
+			}
+		Li_1.onmouseout=function(){
+			startMove(Li_1,{width:200,height:100});
+
+			}
+	}
+	//var timer=null;
+	function startMove(obj,json,fn){
+		var flag=true;
+		clearInterval(obj.timer);
+		obj.timer=setInterval(function(){
+			for(var i in json){
+			speed=(json[i]-parseInt(getStyle(obj,i)))/8;
+			speed=speed>0?Math.ceil(speed):Math.floor(speed);
+			if(json[i]!=parseInt(getStyle(obj,i))){
+				flag=false;
+				}
+			obj.style[i]=parseInt(getStyle(obj,i))+speed+'px';
+					
+
+					if(flag){
+						clearInterval(obj.timer);
+						if(fn){
+							fn();
+						}
+					}
+				}
+
+			},30)
+		}
+	function getStyle(obj,attr){
+	//currentStyle是针对IE浏览器获取样式
+	//getComputedStyle是针对火狐浏览器获取样式
+	if(obj.currentStyle){
+		return obj.currentStyle[attr];
+		}else{
+			return getComputedStyle(obj,false)[attr];
+			}
+	
+	}
+</script>
+
+</body>
+</html>
